@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1036351081801",
+    "firebase_url": "https://solarsee-859f7.firebaseio.com",
+    "project_id": "solarsee-859f7",
+    "storage_bucket": "solarsee-859f7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1036351081801:android:db31efce808e03d8",
+        "android_client_info": {
+          "package_name": "com.example.jaein.solarsee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1036351081801-sf3llkl1tomfrlcikdaf2aerhcef02f9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jaein.solarsee",
+            "certificate_hash": "5136756769aa4038f2d38e41315bcf941b4578ba"
+          }
+        },
+        {
+          "client_id": "1036351081801-svi0l4u5rgd94vileff96s1t6utsvr9o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0aDl_YxbEuzAZ-xOKJjbRzvfqkmbBZzc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1036351081801-svi0l4u5rgd94vileff96s1t6utsvr9o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

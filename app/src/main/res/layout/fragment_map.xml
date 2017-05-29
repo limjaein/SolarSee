@@ -9,7 +9,15 @@
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="지도tab" />
+        android:layout_height="wrap_content"
+        android:text="지도tab"
+        android:textAlignment="center"
+        android:layout_marginBottom="20dp"/>
+
+    <fragment
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="750dp"
+        android:name="com.google.android.gms.maps.MapFragment"/>
 
 </LinearLayout>

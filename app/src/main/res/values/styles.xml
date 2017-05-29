@@ -9,7 +9,7 @@
     </style>
 
     <style name="LoadingTheme" parent="@android:style/Theme.Light.NoTitleBar">
-        <item name="android:windowBackground">@drawable/spreading</item>
+        <item name="android:windowBackground">@drawable/start_image</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">

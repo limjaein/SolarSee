@@ -11,21 +11,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
     TabLayout tabLayout;
-
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
+
+//    DatabaseReference DBtable;
+//    DatabaseReference t_member; // 전부다 저장해두기
+//    DatabaseReference t_photo; // 입력받는거 만들어야함
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        init();
+
+    }
+
+    private void init() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -40,11 +44,16 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
     }
 
+//    private void initDB() {
+//        DBtable = FirebaseDatabase.getInstance().getReference("SolarSee");
+//        t_member = DBtable.child("MEMBER_INFO");
+//        t_photo = DBtable.child("PHOTO_INFO");
+//    }
+
     public void iconClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.plus:
                 Intent intent = new Intent(this, PostActivity.class);
                 startActivity(intent);
@@ -57,10 +66,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -73,17 +78,15 @@ public class MainActivity extends AppCompatActivity {
             tabLayout = (TabLayout) findViewById(R.id.tabs);
             tabLayout.setupWithViewPager(mViewPager);
 
-            if(position==0){
+            if (position == 0) {
                 return new MapFragment();
-            }
-            else{
+            } else {
                 return new AlbumFragment();
             }
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 2;
         }
 
@@ -97,5 +100,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
+
     }
 }

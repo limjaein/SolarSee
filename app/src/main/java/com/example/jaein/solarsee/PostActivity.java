@@ -22,10 +22,16 @@ public class PostActivity extends AppCompatActivity {
 
     }
 
-    private void spinnerBtnClicked() {
-        String str;
 
-        switch(spin.getSelectedItemPosition()){
+    private void init() {
+
+        spin = (Spinner)findViewById(R.id.spinner);
+    }
+
+    private void spinnerBtnClicked() {
+        String str = "";
+
+        switch (spin.getSelectedItemPosition()) {
             case 0:
                 str = "정동진";
                 break;
@@ -40,9 +46,5 @@ public class PostActivity extends AppCompatActivity {
                 break;
         }
 
-    }
-
-    private void init() {
-        spin = (Spinner)findViewById(R.id.spinner);
     }
 }

@@ -19,42 +19,42 @@
             android:scaleType="centerCrop"
                 android:padding="1dp"
                 android:layout_marginBottom="1dp"
-            android:src="@drawable/spreading"/>
+            android:src="@drawable/start_image"/>
             <ImageView
                 android:layout_width="145dp"
                 android:layout_height="145dp"
                 android:scaleType="centerCrop"
                 android:padding="1dp"
                 android:layout_marginBottom="1dp"
-                android:src="@drawable/spreading"/>
+                android:src="@drawable/start_image"/>
             <ImageView
                 android:layout_width="145dp"
                 android:layout_height="145dp"
                 android:scaleType="centerCrop"
                 android:padding="1dp"
                 android:layout_marginBottom="1dp"
-                android:src="@drawable/spreading"/>
+                android:src="@drawable/start_image"/>
             <ImageView
                 android:layout_width="145dp"
                 android:layout_height="145dp"
                 android:scaleType="centerCrop"
                 android:padding="1dp"
                 android:layout_marginBottom="1dp"
-                android:src="@drawable/spreading"/>
+                android:src="@drawable/start_image"/>
             <ImageView
                 android:layout_width="145dp"
                 android:layout_height="145dp"
                 android:scaleType="centerCrop"
                 android:padding="1dp"
                 android:layout_marginBottom="1dp"
-                android:src="@drawable/spreading"/>
+                android:src="@drawable/start_image"/>
             <ImageView
                 android:layout_width="145dp"
                 android:layout_height="145dp"
                 android:scaleType="centerCrop"
                 android:padding="1dp"
                 android:layout_marginBottom="1dp"
-                android:src="@drawable/spreading"/>
+                android:src="@drawable/start_image"/>
 
         </GridLayout>
     </ScrollView>
