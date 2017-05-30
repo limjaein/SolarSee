@@ -21,7 +21,7 @@ public class LoadingActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        startActivity(new Intent(this, MainActivity.class));
+        startActivity(new Intent(this, LoginActivity.class));
         finish();
     }
 }

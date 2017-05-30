@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1036351081801-klt77ii6ho5fbgd7ig50bijutabj2uba.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jaein.solarsee",
+            "certificate_hash": "43df1f754fc154214710ba27d91db0b815ef6539"
+          }
+        },
+        {
           "client_id": "1036351081801-sf3llkl1tomfrlcikdaf2aerhcef02f9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

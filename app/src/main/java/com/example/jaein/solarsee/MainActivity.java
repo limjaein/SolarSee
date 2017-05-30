@@ -16,9 +16,6 @@ public class MainActivity extends AppCompatActivity{
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
-//    DatabaseReference DBtable;
-//    DatabaseReference t_member; // 전부다 저장해두기
-//    DatabaseReference t_photo; // 입력받는거 만들어야함
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +43,6 @@ public class MainActivity extends AppCompatActivity{
         tabLayout.setupWithViewPager(mViewPager);
     }
 
-//    private void initDB() {
-//        DBtable = FirebaseDatabase.getInstance().getReference("SolarSee");
-//        t_member = DBtable.child("MEMBER_INFO");
-//        t_photo = DBtable.child("PHOTO_INFO");
-//    }
 
     public void iconClick(View view) {
         switch (view.getId()) {
