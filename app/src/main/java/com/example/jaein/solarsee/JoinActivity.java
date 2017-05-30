@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -16,8 +15,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Member;
-
 public class JoinActivity extends AppCompatActivity {
 
     EditText joinID;
@@ -26,7 +23,6 @@ public class JoinActivity extends AppCompatActivity {
     DatabaseReference memberInfo;
     DatabaseReference photoInfo;
     FirebaseDatabase fDatabase;
-    Button completeJoinBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

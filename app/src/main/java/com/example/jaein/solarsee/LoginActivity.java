@@ -5,12 +5,10 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText loginId, loginPw;
     Button joinBtn;
 
     int JOIN_OK = 100;
@@ -31,17 +29,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void init(){
-        loginId = (EditText)findViewById(R.id.loginId);
-        loginPw = (EditText)findViewById(R.id.loginPw);
         joinBtn = (Button)findViewById(R.id.joinBtn);
 
     }
 
-//    public void joinBtnClick(View view) {
-//        Intent intent = new Intent(this, JoinActivity.class);
-//        startActivityForResult(intent, JOIN_OK);
-//        //startActivity(intent);
-//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -53,10 +44,4 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void loginBtnClick(View view) {
-        //DB와 비교
-
-
-        //mainActivity로 넘기기
-    }
 }
