@@ -27,6 +27,10 @@
                 </action>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         </activity>
         <activity
             android:name=".MainActivity"
@@ -41,6 +45,10 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar">
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
         </activity>
 
     </application>

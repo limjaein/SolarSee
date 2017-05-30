@@ -35,7 +35,11 @@
         android:paddingLeft="40dp"
         android:paddingRight="40dp">
         <EditText
+<<<<<<< Updated upstream
             android:id="@+id/et_id"
+=======
+            android:id="@+id/loginId"
+>>>>>>> Stashed changes
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginTop="10dp"
@@ -45,7 +49,11 @@
             android:textColorHint="@android:color/darker_gray"
             android:hint="ID"/>
         <EditText
+<<<<<<< Updated upstream
             android:id="@+id/et_pw"
+=======
+            android:id="@+id/loginPw"
+>>>>>>> Stashed changes
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:hint="PASSWORD"
@@ -82,7 +90,6 @@
             android:text="회원가입"
             android:textSize="25dp"
             android:textColor="@android:color/white"
-            android:background="@drawable/radius"
-            android:onClick="joinBtnClick"/>
+            android:background="@drawable/radius"/>
     </LinearLayout>
 </LinearLayout>
