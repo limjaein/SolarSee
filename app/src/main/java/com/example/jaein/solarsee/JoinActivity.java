@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -15,11 +16,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import static com.example.jaein.solarsee.LoginActivity.font;
+
 public class JoinActivity extends AppCompatActivity {
 
     EditText joinID;
     EditText joinPw;
     EditText joinNickname;
+    Button idBtn, nickBtn, joinBtn;
     DatabaseReference memberInfo;
     DatabaseReference photoInfo;
     FirebaseDatabase fDatabase;
@@ -39,6 +43,13 @@ public class JoinActivity extends AppCompatActivity {
         joinID = (EditText)findViewById(R.id.joinID);
         joinPw = (EditText)findViewById(R.id.joinPW);
         joinNickname = (EditText)findViewById(R.id.joinNickname);
+
+        idBtn = (Button)findViewById(R.id.idcheckBtn);
+        nickBtn = (Button)findViewById(R.id.nickcheckBtn);
+        joinBtn = (Button)findViewById(R.id.completeJoin);
+        idBtn.setTypeface(font);
+        nickBtn.setTypeface(font);
+        joinBtn.setTypeface(font);
 
         fDatabase = FirebaseDatabase.getInstance();
         memberInfo = fDatabase.getReference("SolarSee/MEMBER_INFO");
