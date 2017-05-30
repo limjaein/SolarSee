@@ -1,9 +1,11 @@
 package com.example.jaein.solarsee;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -23,6 +25,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText et_id, et_pw;
     String str_id, str_pw;
     int JOIN_OK = -100;
+    static Typeface font;
+    Button btn1,btn2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +37,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void init() {
+        font = Typeface.createFromAsset(getAssets(), "font.ttf");
         et_id = (EditText)findViewById(R.id.et_id);
         et_pw = (EditText)findViewById(R.id.et_pw);
         mAuth = FirebaseAuth.getInstance();
         mAuth.signInWithEmailAndPassword("dlawodls96@naver.com", "ss9436022");
+        btn1 = (Button)findViewById(R.id.loginBtn);
+        btn2 = (Button)findViewById(R.id.joinBtn);
+        btn1.setTypeface(font);
+        btn2.setTypeface(font);
     }
     private void initDB() {
         DBtable = FirebaseDatabase.getInstance().getReference("SolarSee");

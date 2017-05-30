@@ -4,13 +4,18 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+
+import static com.example.jaein.solarsee.LoginActivity.font;
 
 public class JoinActivity extends AppCompatActivity {
 
     EditText joinID;
     EditText joinPw;
     EditText joinNickname;
+
+    Button idBtn, nickBtn, joinBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +31,12 @@ public class JoinActivity extends AppCompatActivity {
 
         joinID = (EditText)findViewById(R.id.joinID);
         joinNickname = (EditText)findViewById(R.id.joinNickname);
+        idBtn = (Button)findViewById(R.id.idcheckBtn);
+        nickBtn = (Button)findViewById(R.id.nickcheckBtn);
+        joinBtn = (Button)findViewById(R.id.joinBtn);
+        idBtn.setTypeface(font);
+        nickBtn.setTypeface(font);
+        joinBtn.setTypeface(font);
     }
 
     public void joinBtnClick(View view) {
