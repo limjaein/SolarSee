@@ -5,15 +5,92 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.jaein.solarsee.PostActivity">
-    <android.support.v7.widget.AppCompatSpinner
-        android:id="@+id/spinner"
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/area"
-        android:spinnerMode="dialog">
-    </android.support.v7.widget.AppCompatSpinner>
-    <Button
-        android:layout_width="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="?attr/colorPrimary">
+            <ImageView android:layout_width="63dp"
+                android:layout_height="63dp"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:src="@drawable/logo_img"/>
+        </android.support.v7.widget.Toolbar>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/colorPrimary"/>
+    </android.support.design.widget.AppBarLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="spinnerBtnClicked"/>
+        android:orientation="vertical"
+        android:paddingTop="50dp"
+        android:paddingBottom="50dp"
+        android:paddingLeft="80dp"
+        android:paddingRight="80dp">
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="300dp"
+            android:layout_height="70dp"
+            android:textAlignment="center"
+            android:entries="@array/area"
+            android:spinnerMode="dialog">
+        </Spinner>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="40dp">
+
+            <ImageButton
+                android:id="@+id/cameraBtn"
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:layout_marginRight="50dp"
+                android:src="@drawable/camera"
+                android:scaleType="centerInside"
+                android:padding="7dp"
+                android:background="@color/colorPurple"
+                android:layout_weight="1"/>
+
+            <ImageButton
+                android:id="@+id/galleryBtn"
+                android:layout_width="0dp"
+                android:layout_height="110dp"
+                android:src="@drawable/gallery"
+                android:scaleType="centerInside"
+                android:padding="10dp"
+                android:background="@color/colorPurple"
+                android:layout_weight="1"/>
+        </LinearLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginBottom="40dp"
+                android:gravity="center"
+                android:hint="@string/edittext_hint"
+                android:background="@drawable/box"
+                android:inputType="textMultiLine|textNoSuggestions"
+                android:padding="30dp"/>
+        <Button
+            android:layout_width="350dp"
+            android:layout_height="70dp"
+            android:text="게시!"
+            android:textSize="20dp"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:background="@color/colorPrimaryDark"
+            android:onClick="postBtnClicked"/>
+    </LinearLayout>
+
 </LinearLayout>

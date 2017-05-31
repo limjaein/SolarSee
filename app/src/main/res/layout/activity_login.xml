@@ -40,6 +40,7 @@
             android:layout_height="80dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
+            android:text="dlawodls96"
             android:textSize="20dp"
             android:textColorHint="@android:color/darker_gray"
             android:hint="ID"/>
@@ -47,6 +48,7 @@
             android:id="@+id/loginPw"
             android:layout_width="match_parent"
             android:layout_height="80dp"
+            android:text="1234"
             android:hint="PASSWORD"
             android:textSize="20dp"
             android:textColorHint="@android:color/darker_gray"/>

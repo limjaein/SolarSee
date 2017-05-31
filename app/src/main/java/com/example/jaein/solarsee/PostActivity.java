@@ -28,7 +28,7 @@ public class PostActivity extends AppCompatActivity {
         spin = (Spinner)findViewById(R.id.spinner);
     }
 
-    private void spinnerBtnClicked() {
+    private void postBtnClicked() {
         String str = "";
 
         switch (spin.getSelectedItemPosition()) {
