@@ -50,7 +50,9 @@
             android:layout_height="80dp"
             android:text="1234"
             android:hint="PASSWORD"
+            android:text="1234"
             android:textSize="20dp"
+            android:inputType="textPassword"
             android:textColorHint="@android:color/darker_gray"/>
 
     </LinearLayout>
