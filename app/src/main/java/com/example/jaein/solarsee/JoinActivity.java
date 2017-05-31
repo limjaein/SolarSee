@@ -128,19 +128,60 @@ public class JoinActivity extends AppCompatActivity {
 
     }
     public void join(){
-        String id = joinID.getText().toString();
-        String pw = joinPw.getText().toString();
-        String nick = joinNickname.getText().toString();
+        final String id = joinID.getText().toString();
+        final String pw = joinPw.getText().toString();
+        final String nick = joinNickname.getText().toString();
 
+        Query id_query = memberInfo.orderByChild("m_id").equalTo(id);
+        id_query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue()==null){  //사용 가능한 아이디
+                    Query name_query = memberInfo.orderByChild("m_name").equalTo(nick);
+                    name_query.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.getValue()==null){  //사용가능한 닉네임
+                                member member = new member(id, nick, pw);
+                                memberInfo.child(id).setValue(member);
+                                Toast.makeText(JoinActivity.this, "디비저장 완료", Toast.LENGTH_SHORT).show();
 
+                                Intent intent = new Intent();
+                                setResult(RESULT_OK, intent);
+                                finish();
+                            }
+                            else{   //사용 불가능한 닉네임
+                                for (DataSnapshot data : dataSnapshot.getChildren()){
+                                    member item = data.getValue(member.class);
+                                    if(nick.equals(item.getM_name())){
+                                        Toast.makeText(JoinActivity.this, "닉네임을 확인하세요.", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            }
 
-        /////////////디비에 저장/////////////////
-        member member = new member(id, nick, pw);
-        memberInfo.child(id).setValue(member);
-        Toast.makeText(this, "디비저장 완료", Toast.LENGTH_SHORT).show();
+                        }
 
-        Intent intent = new Intent();
-        setResult(RESULT_OK, intent);
-        finish();
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+                else{   //사용불가능한 아이디
+                    for (DataSnapshot data : dataSnapshot.getChildren()){
+                        member item = data.getValue(member.class);
+                        if(id.equals(item.getM_id())){
+                            Toast.makeText(JoinActivity.this, "아이디를 확인하세요.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 }

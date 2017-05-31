@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity{
             tabLayout.setupWithViewPager(mViewPager);
 
             if (position == 0) {
-                return new MapFragment();
+                return new CustomMapFragment();
             } else {
                 return new AlbumFragment();
             }
