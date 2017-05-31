@@ -1,10 +1,15 @@
 package com.example.jaein.solarsee;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -32,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText et_id, et_pw;
     String str_id, str_pw;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void init() {
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         et_id = (EditText) findViewById(R.id.loginId);
         et_pw = (EditText) findViewById(R.id.loginPw);
         mAuth = FirebaseAuth.getInstance();
@@ -118,4 +125,5 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
+
 }
