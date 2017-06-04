@@ -10,23 +10,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-
-import static com.example.jaein.solarsee.LoginActivity.t_photo;
 import static com.example.jaein.solarsee.PostActivity.verifyStoragePermissions;
 
 public class MainActivity extends AppCompatActivity{
     TabLayout tabLayout;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
-    static ArrayList<photo> photo_list;
 
 
     @Override
@@ -37,7 +27,6 @@ public class MainActivity extends AppCompatActivity{
         verifyStoragePermissions(this);
         init();
 
-        //savephoto();
     }
 
     private void init() {
@@ -56,8 +45,6 @@ public class MainActivity extends AppCompatActivity{
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-
-        photo_list = new ArrayList<>();
     }
 
 
@@ -74,25 +61,6 @@ public class MainActivity extends AppCompatActivity{
         }
     }
 
-    public void savephoto(){
-        Query photo_query = t_photo.orderByChild("p_date");
-        photo_query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    if(data.getValue()!=null){
-                        photo p = data.getValue(photo.class);
-                        photo_list.add(p);
-                        Toast.makeText(MainActivity.this, "데이터 list에 저장 성공!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
