@@ -11,12 +11,11 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import static com.example.jaein.solarsee.LoginActivity.font;
+import static com.example.jaein.solarsee.LoginActivity.memberInfo;
 
 public class JoinActivity extends AppCompatActivity {
 
@@ -24,9 +23,6 @@ public class JoinActivity extends AppCompatActivity {
     EditText joinPw;
     EditText joinNickname;
     Button idBtn, nickBtn, joinBtn;
-    DatabaseReference memberInfo;
-    static DatabaseReference photoInfo;
-    FirebaseDatabase fDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +47,6 @@ public class JoinActivity extends AppCompatActivity {
         nickBtn.setTypeface(font);
         joinBtn.setTypeface(font);
 
-        fDatabase = FirebaseDatabase.getInstance();
-        memberInfo = fDatabase.getReference("SolarSee/MEMBER_INFO");
-        photoInfo = fDatabase.getReference("SolarSee/PHOTO_INFO");
     }
 
     public void joinBtnClick(View view) {

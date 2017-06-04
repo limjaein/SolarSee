@@ -25,12 +25,13 @@ public class LoginActivity extends AppCompatActivity {
     static Typeface font;
     Button btn1, btn2;
 
-    DatabaseReference DBtable;
-    DatabaseReference t_member; // 전부다 저장해두기
-    static DatabaseReference t_photo; // 입력받는거 만들어야함
     EditText et_id, et_pw;
     String str_id, str_pw;
     static String loginId; // 지금 로긩한 아이디!
+
+    static DatabaseReference memberInfo;
+    static DatabaseReference photoInfo;
+    static FirebaseDatabase fDatabase;
 
 
     @Override
@@ -63,9 +64,10 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void initDB() {
-        DBtable = FirebaseDatabase.getInstance().getReference("SolarSee");
-        t_member = DBtable.child("MEMBER_INFO");
-        t_photo = DBtable.child("PHOTO_INFO");
+
+        fDatabase = FirebaseDatabase.getInstance();
+        memberInfo = fDatabase.getReference("SolarSee/MEMBER_INFO");
+        photoInfo = fDatabase.getReference("SolarSee/PHOTO_INFO");
     }
 
     @Override
@@ -87,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         str_id = et_id.getText().toString();
         str_pw = et_pw.getText().toString();
 
-        Query query = t_member.orderByKey().equalTo(str_id);
+        Query query = memberInfo.orderByKey().equalTo(str_id);
 
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

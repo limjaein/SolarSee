@@ -11,13 +11,13 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
@@ -36,12 +36,13 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static com.example.jaein.solarsee.LoginActivity.loginId;
-import static com.example.jaein.solarsee.LoginActivity.t_photo;
+import static com.example.jaein.solarsee.LoginActivity.photoInfo;
 
 /**
  * Created by jaein on 2017-05-23.
@@ -71,7 +72,6 @@ public class PostActivity extends AppCompatActivity {
         init();
     }
 
-
     private void init() {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         imageView = (ImageView) findViewById(R.id.imageView);
@@ -83,7 +83,12 @@ public class PostActivity extends AppCompatActivity {
 
     private void SelectCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, CAMERA_CODE);
+        File picture = savePictureFile();
+        imgUri = Uri.fromFile(picture);
+        if (picture != null) {
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri);
+            startActivityForResult(intent, CAMERA_CODE);
+        }
     }
 
     private void SelectGallery() {
@@ -92,6 +97,33 @@ public class PostActivity extends AppCompatActivity {
         intent.setType("image/*");
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY_CODE);
     }
+    private File savePictureFile() {
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
+        Date now = new Date();
+        String imageFileName = formatter.format(now);
+            File pictureStorage = new File(
+                    Environment.getExternalStoragePublicDirectory(
+                            Environment.DIRECTORY_DCIM), "SOLARSEE/");
+            // 만약 장소가 존재하지 않는다면 폴더를 새롭게 만든다.
+            if (!pictureStorage.exists()) { /** * mkdir은 폴더를 하나만 만들고, * mkdirs는 경로상에 존재하는 모든 폴더를 만들어준다. */
+                pictureStorage.mkdirs();
+            }
+            try {
+                File file = File.createTempFile(imageFileName, ".png", pictureStorage);
+                // ImageView에 보여주기위해 사진파일의 절대 경로를 얻어온다.
+                imagePath = file.getAbsolutePath();
+                // 찍힌 사진을 "갤러리" 앱에 추가한다.
+                Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                File f = new File(imagePath);
+                Uri contentUri = Uri.fromFile(f);
+                mediaScanIntent.setData(contentUri);
+                this.sendBroadcast(mediaScanIntent);
+                return file;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -105,14 +137,7 @@ public class PostActivity extends AppCompatActivity {
                     SendPicture(data); //갤러리에서 가져오기
                     break;
                 case CAMERA_CODE:
-                    if (data != null) {
-                        Log.e("Test", "result = " + data);
-                        imgUri = data.getData();
-                        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
-                        if (thumbnail != null) {
-                            imageView.setImageBitmap(thumbnail);
-                        }
-                    }
+                    imageView.setImageURI(imgUri);
                     break;
 
                 default:
@@ -121,6 +146,7 @@ public class PostActivity extends AppCompatActivity {
 
         }
     }
+
 
 
     private void SendPicture(Intent data) {
@@ -257,7 +283,7 @@ public class PostActivity extends AppCompatActivity {
         }
 }
     private void saveFileToDB(){
-        Query photo_query = t_photo.orderByChild("p_date").equalTo(filename);
+        Query photo_query = photoInfo.orderByChild("p_date").equalTo(filename);
         photo_query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -266,12 +292,11 @@ public class PostActivity extends AppCompatActivity {
                     filename = filename.substring(0,spot_pos);
                     // .png 앞부분까지 자름
                     photo pt = new photo(filename, loginId, content, str_spin, "");
-                    t_photo.child(filename).setValue(pt);
+                    photoInfo.child(filename).setValue(pt);
                     Toast.makeText(PostActivity.this, "디비저장 완료", Toast.LENGTH_SHORT).show();
                 }
             }
 
-            @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
@@ -297,4 +322,26 @@ public class PostActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE, REQUEST_EXTERNAL_STORAGE);
         }
     }
+
+//    public Uri getLastCaptureImageUri() {
+//        Uri uri = null;
+//        String str = "";
+//        String[] IMAGE_PROJECTION = {
+//                MediaStore.Images.ImageColumns.DATA,
+//                MediaStore.Images.ImageColumns._ID
+//        };
+//        try{
+//            Cursor cursorImages = getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+//                    IMAGE_PROJECTION, null, null, null);
+//            if(cursorImages!=null && cursorImages.moveToLast()){
+//
+//                uri = Uri.parse(cursorImages.getString(0)); // 경로
+//            }
+//            cursorImages.close();
+//        }catch (Exception e){
+//            e.printStackTrace();
+//        }
+//        return uri;
+//
+//    }
 }
