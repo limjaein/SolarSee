@@ -11,26 +11,68 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:ellipsize="end"
-            android:singleLine="true"
             android:textColor="#ff000000"
             android:textSize="14dp"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/snippet1"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:textColor="#ff7f7f7f"
-            android:textSize="14dp" />
-        <TextView
-            android:id="@+id/snippet2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:textColor="#ff7f7f7f"
-            android:textSize="14dp" />
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginRight="10dp">
+                        <ImageView
+                            android:id="@+id/riseCloud"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:scaleType="centerCrop"
+                            android:ellipsize="end" />
+                        <TextView
+                            android:id="@+id/riseTemp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:textColor="#ff7f7f7f"
+                            android:textSize="14dp" />
+                        <TextView
+                            android:id="@+id/sunRiseTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:textColor="#ff7f7f7f"
+                            android:textSize="14dp" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:layout_marginLeft="10dp">
+                        <ImageView
+                            android:id="@+id/setCloud"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:scaleType="centerCrop"
+                            android:ellipsize="end" />
+                        <TextView
+                            android:id="@+id/setTemp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:textColor="#ff7f7f7f"
+                            android:textSize="14dp" />
+                        <TextView
+                            android:id="@+id/sunSetTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:textColor="#ff7f7f7f"
+                            android:textSize="14dp" />
+                </LinearLayout>
+        </LinearLayout>
 
 </LinearLayout>
