@@ -96,17 +96,19 @@
                 android:inputType="textMultiLine|textNoSuggestions"
                 android:padding="30dp"
                 android:layout_weight="1"
-                android:id="@+id/editText" />
+                android:id="@+id/content" />
         </LinearLayout>
 
         <Button
+            android:id="@+id/postBtn"
             android:layout_width="350dp"
             android:layout_height="70dp"
             android:text="게시!"
             android:textSize="20dp"
             android:layout_gravity="center"
             android:textColor="@android:color/white"
-            android:background="@color/colorPrimaryDark"/>
+            android:background="@color/colorPrimaryDark"
+            android:onClick="photoBtnClicked"/>
     </LinearLayout>
 
 </LinearLayout>
