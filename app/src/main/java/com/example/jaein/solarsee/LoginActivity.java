@@ -1,12 +1,8 @@
 package com.example.jaein.solarsee;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
@@ -14,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,10 +27,10 @@ public class LoginActivity extends AppCompatActivity {
 
     DatabaseReference DBtable;
     DatabaseReference t_member; // 전부다 저장해두기
-    DatabaseReference t_photo; // 입력받는거 만들어야함
-    private FirebaseAuth mAuth;
+    static DatabaseReference t_photo; // 입력받는거 만들어야함
     EditText et_id, et_pw;
     String str_id, str_pw;
+    static String loginId; // 지금 로긩한 아이디!
 
 
     @Override
@@ -57,9 +52,6 @@ public class LoginActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         et_id = (EditText) findViewById(R.id.loginId);
         et_pw = (EditText) findViewById(R.id.loginPw);
-        mAuth = FirebaseAuth.getInstance();
-        mAuth.signInWithEmailAndPassword("dlawodls96@naver.com", "ss9436022");
-
 
         font = Typeface.createFromAsset(getAssets(), "font.ttf");
         joinBtn = (Button) findViewById(R.id.joinBtn);
@@ -104,6 +96,7 @@ public class LoginActivity extends AppCompatActivity {
                     member m = data.getValue(member.class);
                     if(str_pw.equals(m.getM_pw())){ // 비밀번호 일치
                         Toast.makeText(LoginActivity.this, "일치", Toast.LENGTH_SHORT).show();
+                        loginId = str_id;
                         intentToMain();
                     }
                     else{

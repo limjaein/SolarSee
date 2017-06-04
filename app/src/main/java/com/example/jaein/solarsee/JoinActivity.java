@@ -25,7 +25,7 @@ public class JoinActivity extends AppCompatActivity {
     EditText joinNickname;
     Button idBtn, nickBtn, joinBtn;
     DatabaseReference memberInfo;
-    DatabaseReference photoInfo;
+    static DatabaseReference photoInfo;
     FirebaseDatabase fDatabase;
 
     @Override
@@ -90,7 +90,6 @@ public class JoinActivity extends AppCompatActivity {
                         }
                     }
                 }
-
             }
 
             @Override
@@ -136,7 +135,7 @@ public class JoinActivity extends AppCompatActivity {
         id_query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getValue()==null){  //사용 가능한 아이디
+                    if(dataSnapshot.getValue()==null){  //사용 가능한 아이디
                     Query name_query = memberInfo.orderByChild("m_name").equalTo(nick);
                     name_query.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override

@@ -1,6 +1,7 @@
 package com.example.jaein.solarsee;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -19,13 +20,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.io.IOException;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
-//import android.net.Uri;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static com.example.jaein.solarsee.LoginActivity.loginId;
+import static com.example.jaein.solarsee.LoginActivity.t_photo;
 
 /**
  * Created by jaein on 2017-05-23.
@@ -39,6 +55,13 @@ public class PostActivity extends AppCompatActivity {
     ImageView imageView;
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
     private static String[] PERMISSIONS_STORAGE = {android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    FirebaseStorage storage;
+    String imagePath;
+    Uri imgUri;
+    EditText et_content;
+    String content;
+    static String filename;
+    String str_spin;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,7 +69,6 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         init();
-
     }
 
 
@@ -54,6 +76,8 @@ public class PostActivity extends AppCompatActivity {
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         imageView = (ImageView) findViewById(R.id.imageView);
         spin = (Spinner) findViewById(R.id.spinner);
+        storage = FirebaseStorage.getInstance();
+        et_content = (EditText)findViewById(R.id.content);
     }
 
 
@@ -81,12 +105,11 @@ public class PostActivity extends AppCompatActivity {
                     SendPicture(data); //갤러리에서 가져오기
                     break;
                 case CAMERA_CODE:
-                    if( data != null )
-                    {
+                    if (data != null) {
                         Log.e("Test", "result = " + data);
-                        Bitmap thumbnail = (Bitmap)data.getExtras().get("data");
-                        if( thumbnail != null )
-                        {
+                        imgUri = data.getData();
+                        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+                        if (thumbnail != null) {
                             imageView.setImageBitmap(thumbnail);
                         }
                     }
@@ -102,8 +125,8 @@ public class PostActivity extends AppCompatActivity {
 
     private void SendPicture(Intent data) {
 
-        Uri imgUri = data.getData();
-        String imagePath = getRealPathFromURI(imgUri); // path 경로
+        imgUri = data.getData();
+        imagePath = getRealPathFromURI(imgUri); // path 경로
         ExifInterface exif = null;
         try {
             exif = new ExifInterface(imagePath);
@@ -124,10 +147,8 @@ public class PostActivity extends AppCompatActivity {
         // 회전 각도 셋팅
         matrix.postRotate(degree);
         // 이미지와 Matrix 를 셋팅해서 Bitmap 객체 생성
-        return Bitmap.createBitmap(src, 0, 0, src.getWidth(),src.getHeight(), matrix, true);
+        return Bitmap.createBitmap(src, 0, 0, src.getWidth(), src.getHeight(), matrix, true);
     }
-
-
 
 
     //사진 절대 경로 구하기
@@ -137,7 +158,6 @@ public class PostActivity extends AppCompatActivity {
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
         return cursor.getString(column_index);
-
     }
 
 
@@ -166,9 +186,97 @@ public class PostActivity extends AppCompatActivity {
             case R.id.galleryBtn:
                 SelectGallery();
                 break;
+            case R.id.postBtn:
+                switch (spin.getSelectedItemPosition()){
+                    case 0:
+                        str_spin = "정동진";
+                        break;
+                    case 1:
+                        str_spin = "서해";
+                        break;
+                    case 2:
+                        str_spin = "동해";
+                        break;
+                    case 3:
+                        str_spin = "코타키나발루";
+                        break;
+                }
+                uploadFile();
+                break;
         }
     }
 
+    private void uploadFile() {
+        content = et_content.getText().toString();
+
+        //업로드할 파일이 있으면 수행
+        if (imgUri != null) {
+            //업로드 진행 Dialog 보이기
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("업로드중...");
+            progressDialog.show();
+
+            //Unique한 파일명을 만들자.
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
+            Date now = new Date();
+            filename = formatter.format(now) + ".png";
+            //storage 주소와 폴더 파일명을 지정해 준다.
+            StorageReference storageRef = storage.getReferenceFromUrl("gs://solarsee-859f7.appspot.com").child("solarsee_images/" + filename);
+            //올라가거라...
+            storageRef.putFile(imgUri)
+                    //성공시
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            progressDialog.dismiss(); //업로드 진행 Dialog 상자 닫기
+                            Toast.makeText(getApplicationContext(), "업로드 완료!", Toast.LENGTH_SHORT).show();
+                            saveFileToDB();
+                            finish();
+                        }
+                    })
+                    //실패시
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            progressDialog.dismiss();
+                            Toast.makeText(getApplicationContext(), "업로드 실패!", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    //진행중
+                    .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                            @SuppressWarnings("VisibleForTests") //이걸 넣어 줘야 아랫줄에 에러가 사라진다. 넌 누구냐?
+                                    double progress = (100 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                            //dialog에 진행률을 퍼센트로 출력해 준다
+                            progressDialog.setMessage("Uploaded " + ((int) progress) + "% ...");
+                        }
+                    });
+        } else {
+            Toast.makeText(getApplicationContext(), "파일을 먼저 선택하세요.", Toast.LENGTH_SHORT).show();
+        }
+}
+    private void saveFileToDB(){
+        Query photo_query = t_photo.orderByChild("p_date").equalTo(filename);
+        photo_query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getValue()==null) {  // 일치하는 이름이 없을때
+                    int spot_pos = filename.indexOf(".");
+                    filename = filename.substring(0,spot_pos);
+                    // .png 앞부분까지 자름
+                    photo pt = new photo(filename, loginId, content, str_spin, "");
+                    t_photo.child(filename).setValue(pt);
+                    Toast.makeText(PostActivity.this, "디비저장 완료", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 0) {
