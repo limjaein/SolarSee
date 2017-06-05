@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -185,8 +186,8 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
         map.setOnMapClickListener(this);
 
         UiSettings uiSettings = map.getUiSettings();
-        uiSettings.setZoomControlsEnabled(true);
-
+        //uiSettings.setZoomControlsEnabled(true);
+        uiSettings.setAllGesturesEnabled(false);
 
         for(int i=0; i<m_data.size(); i++){
             LatLng latLng = m_data.get(i).getP_latlng();
@@ -197,7 +198,7 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
     }
 
     public void updateMap(){
-        map.moveCamera(CameraUpdateFactory.newLatLng(Center));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(Center,6.5f));
         map.animateCamera(CameraUpdateFactory.newLatLngZoom(Center, 6.5f));
     }
 
@@ -265,6 +266,13 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
                                                 ","+data.getP_scloud()+","+data.getP_stemperature()));
 
                                         map.setInfoWindowAdapter(new CustomInfoWindowAdapter());
+                                        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                                            @Override
+                                            public void onInfoWindowClick(Marker marker) {
+                                                Toast.makeText(getActivity(), marker.getTitle(), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
                                     }
                                 });
                     }

@@ -16,6 +16,11 @@
         android:verticalSpacing="7dp"
         android:horizontalSpacing="7dp">
     </GridView>
+    <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="4"-->
+        <!--android:id="@+id/imageView"/>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

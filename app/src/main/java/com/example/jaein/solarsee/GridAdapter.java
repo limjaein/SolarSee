@@ -1,11 +1,18 @@
 package com.example.jaein.solarsee;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.firebase.ui.storage.images.FirebaseImageLoader;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.ArrayList;
 
 /**
  * Created by jaein on 2017-06-05.
@@ -14,10 +21,11 @@ import android.widget.ImageView;
 public class GridAdapter extends BaseAdapter {
     Context context;
     int layout;
-    int img[];
+    //ArrayList<DrawableTypeRequest> img;
     LayoutInflater inf;
+    ArrayList<StorageReference> img;
 
-    public GridAdapter(Context context, int layout, int[] img) {
+    public GridAdapter(Context context, int layout, ArrayList<StorageReference> img) {
         this.context = context;
         this.layout = layout;
         this.img = img;
@@ -26,12 +34,12 @@ public class GridAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return img.length;
+        return img.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return img[i];
+        return img.get(i);
     }
 
     @Override
@@ -41,9 +49,13 @@ public class GridAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if(convertView==null)
-            convertView=inf.inflate(layout,null);
+            convertView=inf.inflate(R.layout.image_row,null);
         ImageView iv=(ImageView)convertView.findViewById(R.id.imageView);
-        iv.setImageResource(img[position]);
+        Log.i("png", img.get(position).toString());
+        Glide.with(context)
+                .using(new FirebaseImageLoader())
+                .load(img.get(position))
+                .into(iv);
 
         return convertView;
 
