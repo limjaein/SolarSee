@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/albumFrag"
     tools:context="com.example.jaein.solarsee.AlbumFragment">
     <GridView
         android:layout_width="match_parent"
@@ -16,11 +17,6 @@
         android:verticalSpacing="7dp"
         android:horizontalSpacing="7dp">
     </GridView>
-    <!--<ImageView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_weight="4"-->
-        <!--android:id="@+id/imageView"/>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -45,7 +41,8 @@
             android:src="@drawable/home_icon"
             android:background="@android:color/transparent"
             android:padding="40dp"
-            android:scaleType="centerInside"/>
+            android:scaleType="centerInside"
+            android:onClick="homeClick"/>
         <ImageButton
             android:id="@+id/like"
             android:layout_width="0dp"
