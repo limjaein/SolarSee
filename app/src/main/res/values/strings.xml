@@ -4,10 +4,18 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="edittext_hint"><font size="20">글을 입력해주세요!</font></string>
 <string-array name="area">
-<item>정동진</item>
-<item>서해</item>
-<item>동해</item>
-<item>코타키나발루</item>
+    <item>정동진</item>
+    <item>간절곶</item>
+    <item>이기대</item>
+    <item>성산일출봉</item>
+    <item>호미곶</item>
+    <item>하늘공원</item>
+    <item>꽃지해안공원</item>
+    <item>변산반도</item>
+    <item>땅끝마을</item>
+    <item>향일암</item>
+    <item>지리산천왕봉</item>
+    <item>태백산</item>
 </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     </resources>

@@ -218,13 +218,37 @@ public class PostActivity extends AppCompatActivity {
                         str_spin = "정동진";
                         break;
                     case 1:
-                        str_spin = "서해";
+                        str_spin = "간절곶";
                         break;
                     case 2:
-                        str_spin = "동해";
+                        str_spin = "이기대";
                         break;
                     case 3:
-                        str_spin = "코타키나발루";
+                        str_spin = "성산일출봉";
+                        break;
+                    case 4:
+                        str_spin = "호미곶";
+                        break;
+                    case 5:
+                        str_spin = "하늘공원";
+                        break;
+                    case 6:
+                        str_spin = "꽃지해안공원";
+                        break;
+                    case 7:
+                        str_spin = "변산반도";
+                        break;
+                    case 8:
+                        str_spin = "땅끝마을";
+                        break;
+                    case 9:
+                        str_spin = "향일암";
+                        break;
+                    case 10:
+                        str_spin = "지리산천왕봉";
+                        break;
+                    case 11:
+                        str_spin = "태백산";
                         break;
                 }
                 uploadFile();

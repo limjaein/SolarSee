@@ -118,6 +118,8 @@ public class LoginActivity extends AppCompatActivity {
     }
     public void intentToMain(){
         Intent intent = new Intent(this, MainActivity.class);
+        //Toast.makeText(this, loginId, Toast.LENGTH_SHORT).show();
+        //intent.putExtra("loginId", loginId);
         startActivity(intent);
     }
 

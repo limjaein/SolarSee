@@ -47,7 +47,7 @@ public class GridAdapter extends BaseAdapter {
         return i;
     }
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if(convertView==null)
             convertView=inf.inflate(R.layout.image_row,null);
         ImageView iv=(ImageView)convertView.findViewById(R.id.imageView);
@@ -56,6 +56,20 @@ public class GridAdapter extends BaseAdapter {
                 .using(new FirebaseImageLoader())
                 .load(img.get(position))
                 .into(iv);
+
+        iv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Dialog dialog = new Dialog(context);
+//                dialog.setContentView(R.layout.custom_dialog);
+//
+//                ImageView div = (ImageView)dialog.findViewById(R.id.dialogImage);
+//                Glide.with(context)
+//                        .using(new FirebaseImageLoader())
+//                        .load(img.get(position))
+//                        .into(div);
+            }
+        });
 
         return convertView;
 

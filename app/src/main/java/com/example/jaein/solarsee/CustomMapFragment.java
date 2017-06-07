@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -45,7 +44,7 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
         ActivityCompat.OnRequestPermissionsResultCallback,
         GoogleMap.OnMapClickListener{
 
-
+    static String location;
     GoogleMap map;
     private MapView mapView;
     LatLng Center;
@@ -126,7 +125,6 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
         if(mapView != null){
             mapView.onCreate(savedInstanceState);
         }
-
         init();
     }
 
@@ -213,39 +211,6 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
                 .asString().setCallback(new FutureCallback<String>() {
                     @Override
                     public void onCompleted(Exception e, final String result) {
-//                        Ion.with(CustomMapFragment.this)
-//                                .load("http://newsky2.kma.go.kr/service/SecndSrtpdFrcstInfoService2/ForecastGrib?" +
-//                                        "base_date="+date+"&base_time="+time+"&nx="+data.getP_x()+"&ny="+data.getP_y()+"&"+
-//                                        "ServiceKey=WKilB3x6pMR6xXG5MBPsHLE3Xxq48pi1S02fQjef%2FY83AadtPrPr9Wq1mhzsOsJ2efkrLD0i4KW8irbmFnhq0w%3D%3D")
-//                                .asString()
-//                                .setCallback(new FutureCallback<String>() {
-//                                    @Override
-//                                    public void onCompleted(Exception e, String result2) {
-//                                        parsingXML(result);
-//                                        parsingXML2(result2);
-//                                        data.setSunInfo(sunriseInfo, sunsetInfo);
-//                                        switch (rain){
-//                                            case 0:
-//                                                break;
-//                                            case 1:
-//                                                cloud = "비";
-//                                                break;
-//                                            case 2:
-//                                                cloud = "비/눈";
-//                                                break;
-//                                            case 3:
-//                                                cloud = "눈";
-//                                                break;
-//                                        }
-//                                        data.setWeatherInfo(temperature, cloud);
-//                                        Marker mk = map.addMarker(new MarkerOptions()
-//                                                .position(data.getP_latlng())
-//                                                .title(data.getP_placeName())
-//                                                .snippet(data.getP_sunRise()+","+data.getP_sunSet()+","+data.getP_cloud()+","+data.getP_temperature()));
-//
-//                                        map.setInfoWindowAdapter(new CustomInfoWindowAdapter());
-//                                    }
-//                                });
                         Ion.with(CustomMapFragment.this)
                                 .load("http://www.kma.go.kr/wid/queryDFS.jsp?gridx="+data.getP_x()+"&gridy="+data.getP_y())
                                 .asString()
@@ -269,7 +234,15 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
                                         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                                             @Override
                                             public void onInfoWindowClick(Marker marker) {
-                                                Toast.makeText(getActivity(), marker.getTitle(), Toast.LENGTH_SHORT).show();
+                                                location = marker.getTitle();
+                                                String Tabalbum  = ((MainActivity)getActivity()).getAlbumFragmentB();
+
+                                                AlbumFragment albumFrag = (AlbumFragment)getActivity().getSupportFragmentManager().findFragmentByTag(Tabalbum);
+
+                                                albumFrag.locaImageList();
+
+                                                ((MainActivity)getActivity()).getViewPager().setCurrentItem(1);
+
                                             }
                                         });
 
@@ -441,117 +414,6 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
         }
     }
 
-//    public void parsingXML2(String result){
-//        XmlPullParserFactory factory = null;
-//        try {
-//            factory = XmlPullParserFactory.newInstance().newInstance();
-//            factory.setNamespaceAware(true);    //XML namespace 지원여부 설정
-//            XmlPullParser xpo = factory.newPullParser();
-//            xpo.setInput(new StringReader(result));
-//            int eventType = xpo.getEventType();
-//            int bSet = 0;
-//            int cSet = 0;
-//
-//            while (eventType != XmlPullParser.END_DOCUMENT){
-//                if(eventType == XmlPullParser.START_DOCUMENT){
-//                    ;
-//                }
-//                else if(eventType == XmlPullParser.START_TAG){
-//                    String tag_name = xpo.getName();
-//                    if(tag_name.equals("category")){
-//                        //temperature = "기온"+":";
-//                        bSet = 1;
-//                    }
-//                    else if(tag_name.equals("obsrValue") ){
-//                        //cloud = "구름"+":";
-//                        bSet = 2;
-//                    }
-//                    else{
-//                        bSet = 0;
-//                    }
-//
-//                }
-//                else if(eventType == XmlPullParser.TEXT){
-//                    if(bSet==1){
-//                        if(xpo.getText().equals("T1H")){
-//                            cSet = 1;
-//                            //temperature = "기온";
-//                        }
-//                        else if(xpo.getText().equals("SKY")){
-//                            cSet = 2;
-//                            //cloud = "구름";
-//                        }
-//                        else if(xpo.getText().equals("PTY")){
-//                            cSet = 3;
-//                        }
-//                        else{
-//                            cSet = 0;
-//                        }
-//                        //temperature += xpo.getText();
-//                        //Toast.makeText(getActivity(), temperature, Toast.LENGTH_SHORT).show();
-//                        bSet = 0;
-//                    }
-//                    else if(bSet==2){
-//                        if(cSet == 1){
-//                            temperature = "기온:"+xpo.getText();
-//                            cSet=0;
-//
-//                        }
-//                        else if(cSet == 2){
-//                            switch (xpo.getText()){
-//                                case "1":
-//                                    cloud = "맑음";
-//                                    cSet=0;
-//                                    break;
-//                                case "2":
-//                                    cloud = "구름조금";
-//                                    cSet=0;
-//                                    break;
-//                                case "3":
-//                                    cloud = "구름많음";
-//                                    cSet=0;
-//                                    break;
-//                                case "4":
-//                                    cloud = "흐림";
-//                                    cSet=0;
-//                                    break;
-//                            }
-//                        }
-//                        else if(cSet == 3){
-//                            switch (xpo.getText()){
-//                                case "0":
-//                                    rain = 0;
-//                                    break;
-//                                case "1":
-//                                    rain = 1;
-//                                    break;
-//                                case "2":
-//                                    rain = 2;
-//                                    break;
-//                                case "3":
-//                                    rain = 3;
-//                                    break;
-//                            }
-//                        }
-//                        //cloud += xpo.getText();
-//                        //Toast.makeText(getActivity(), sunsetInfo, Toast.LENGTH_SHORT).show();
-//                        bSet = 0;
-//                    }
-//                }
-//                else if(eventType == XmlPullParser.END_TAG){
-//                    ;
-//                }
-//                try {
-//                    eventType = xpo.next();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        } catch (XmlPullParserException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     @Override
     public void onMapClick(LatLng latLng) {
 
@@ -590,13 +452,13 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
             return mContents;
         }
 
-        private void render(Marker marker, View view) {
+        private void render(final Marker marker, View view) {
 
             LinearLayout li = (LinearLayout)view.findViewById(R.id.linear);
             li.setBackgroundResource(R.drawable.custom_info_bubble);
 
             String title = marker.getTitle();
-            TextView titleUi = ((TextView) view.findViewById(R.id.title));
+            final TextView titleUi = ((TextView) view.findViewById(R.id.title));
             if (title != null) {
                 // Spannable string allows us to edit the formatting of the text.
                 SpannableString titleText = new SpannableString(title);
@@ -697,6 +559,17 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
             } else {
                 snippetUi6.setText("");
             }
+
+//            li.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    AlbumFragment albumFragment = (AlbumFragment)getFragmentManager().findFragmentById(R.id.albumFrag);
+//                    String title = marker.getTitle();
+//                    location = title;
+//                    Toast.makeText(getActivity(), location, Toast.LENGTH_SHORT).show();
+//                    albumFragment.locaImageList();
+//                }
+//            });
 
         }
     }

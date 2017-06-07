@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 
 import static com.example.jaein.solarsee.PostActivity.verifyStoragePermissions;
 
@@ -18,6 +19,22 @@ public class MainActivity extends AppCompatActivity{
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
 
+    String albumFrag;
+
+    public void setAlbumFragmentB(String t){
+        albumFrag = t;
+    }
+
+    public String getAlbumFragmentB(){
+        return albumFrag;
+    }
+
+    public ViewPager getViewPager() {
+        if (null == mViewPager) {
+            mViewPager = (ViewPager) findViewById(R.id.container);
+        }
+        return mViewPager;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +81,11 @@ public class MainActivity extends AppCompatActivity{
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+
+        }
+
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
@@ -98,4 +120,5 @@ public class MainActivity extends AppCompatActivity{
         }
 
     }
+
 }
