@@ -43,6 +43,10 @@ public class JoinActivity extends AppCompatActivity {
         idBtn = (Button)findViewById(R.id.idcheckBtn);
         nickBtn = (Button)findViewById(R.id.nickcheckBtn);
         joinBtn = (Button)findViewById(R.id.completeJoin);
+
+        joinID.setTypeface(font);
+        joinPw.setTypeface(font);
+        joinNickname.setTypeface(font);
         idBtn.setTypeface(font);
         nickBtn.setTypeface(font);
         joinBtn.setTypeface(font);
@@ -125,7 +129,7 @@ public class JoinActivity extends AppCompatActivity {
         final String nick = joinNickname.getText().toString();
 
         Query id_query = memberInfo.orderByChild("m_id").equalTo(id);
-        id_query.addListenerForSingleValueEvent(new ValueEventListener() {
+            id_query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                     if(dataSnapshot.getValue()==null){  //사용 가능한 아이디
@@ -134,7 +138,7 @@ public class JoinActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if(dataSnapshot.getValue()==null){  //사용가능한 닉네임
-                                member member = new member(id, nick, pw);
+                                member member = new member(id,pw,nick);
                                 memberInfo.child(id).setValue(member);
                                 Toast.makeText(JoinActivity.this, "디비저장 완료", Toast.LENGTH_SHORT).show();
 

@@ -42,7 +42,6 @@
             android:layout_width="300dp"
             android:layout_height="70dp"
             android:textAlignment="center"
-            android:entries="@array/area"
             android:spinnerMode="dialog">
         </Spinner>
         <LinearLayout
@@ -83,8 +82,8 @@
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="0dp"
-                android:layout_marginTop="20dp"
-                android:layout_height="250dp"
+                android:layout_height="300dp"
+                android:background="@drawable/box"
                 android:scaleType="fitCenter"
                 android:layout_weight="1"/>
             <EditText
@@ -103,8 +102,8 @@
             android:id="@+id/postBtn"
             android:layout_width="350dp"
             android:layout_height="70dp"
-            android:text="게시!"
-            android:textSize="20dp"
+            android:text="게시"
+            android:textSize="25dp"
             android:layout_gravity="center"
             android:textColor="@android:color/white"
             android:background="@color/colorPrimaryDark"

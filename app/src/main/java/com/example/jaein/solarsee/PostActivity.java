@@ -2,6 +2,7 @@ package com.example.jaein.solarsee;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -18,11 +19,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -39,8 +45,11 @@ import com.google.firebase.storage.UploadTask;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import static com.example.jaein.solarsee.LoginActivity.font;
 import static com.example.jaein.solarsee.LoginActivity.loginId;
 import static com.example.jaein.solarsee.LoginActivity.photoInfo;
 
@@ -63,6 +72,9 @@ public class PostActivity extends AppCompatActivity {
     String content;
     static String filename;
     String str_spin;
+    ArrayList<String> loca_list;
+    SpinnerAdapter adapter;
+    Button postBtn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,6 +90,28 @@ public class PostActivity extends AppCompatActivity {
         spin = (Spinner) findViewById(R.id.spinner);
         storage = FirebaseStorage.getInstance();
         et_content = (EditText)findViewById(R.id.content);
+        postBtn = (Button)findViewById(R.id.postBtn);
+        postBtn.setTypeface(font);
+
+        loca_list = new ArrayList<>();
+        loca_list.add("정동진");
+        loca_list.add("간절곶");
+        loca_list.add("이기대");
+        loca_list.add("성산일출봉");
+        loca_list.add("호미곶");
+        loca_list.add("하늘공원");
+        loca_list.add("꽃지해안공원");
+        loca_list.add("변산반도");
+        loca_list.add("땅끝마을");
+        loca_list.add("향일암");
+        loca_list.add("지리산천왕봉");
+        loca_list.add("태백산");
+
+
+        adapter = new SpinnerAdapter(this, R.layout.spinner_entry, loca_list);
+        spin.setAdapter(adapter);
+
+
     }
 
 
@@ -97,6 +131,7 @@ public class PostActivity extends AppCompatActivity {
         intent.setType("image/*");
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), GALLERY_CODE);
     }
+
     private File savePictureFile() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
         Date now = new Date();
@@ -213,44 +248,7 @@ public class PostActivity extends AppCompatActivity {
                 SelectGallery();
                 break;
             case R.id.postBtn:
-                switch (spin.getSelectedItemPosition()){
-                    case 0:
-                        str_spin = "정동진";
-                        break;
-                    case 1:
-                        str_spin = "간절곶";
-                        break;
-                    case 2:
-                        str_spin = "이기대";
-                        break;
-                    case 3:
-                        str_spin = "성산일출봉";
-                        break;
-                    case 4:
-                        str_spin = "호미곶";
-                        break;
-                    case 5:
-                        str_spin = "하늘공원";
-                        break;
-                    case 6:
-                        str_spin = "꽃지해안공원";
-                        break;
-                    case 7:
-                        str_spin = "변산반도";
-                        break;
-                    case 8:
-                        str_spin = "땅끝마을";
-                        break;
-                    case 9:
-                        str_spin = "향일암";
-                        break;
-                    case 10:
-                        str_spin = "지리산천왕봉";
-                        break;
-                    case 11:
-                        str_spin = "태백산";
-                        break;
-                }
+                str_spin = loca_list.get(spin.getSelectedItemPosition());
                 uploadFile();
                 break;
         }
@@ -347,25 +345,34 @@ public class PostActivity extends AppCompatActivity {
         }
     }
 
-//    public Uri getLastCaptureImageUri() {
-//        Uri uri = null;
-//        String str = "";
-//        String[] IMAGE_PROJECTION = {
-//                MediaStore.Images.ImageColumns.DATA,
-//                MediaStore.Images.ImageColumns._ID
-//        };
-//        try{
-//            Cursor cursorImages = getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-//                    IMAGE_PROJECTION, null, null, null);
-//            if(cursorImages!=null && cursorImages.moveToLast()){
-//
-//                uri = Uri.parse(cursorImages.getString(0)); // 경로
-//            }
-//            cursorImages.close();
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//        return uri;
-//
-//    }
+    public class SpinnerAdapter extends ArrayAdapter<String> {
+        Context context;
+        List<String> a_list;
+
+        public SpinnerAdapter(Context context, int resource, List<String> objects) {
+            super(context, resource, objects);
+            this.context = context;
+            a_list = objects;
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            TextView view = (TextView) super.getView(position, convertView, parent);
+            view.setTypeface(font);
+            view.setGravity(Gravity.CENTER);
+            view.setPadding(0,15,0,15);
+            return view;
+        }
+
+        /**
+         * 기본 스피너 View 정의
+         */
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TextView view = (TextView) super.getView(position, convertView, parent);
+            view.setTypeface(font);
+            view.setGravity(Gravity.CENTER);
+            return view;
+        }
+    }
 }
