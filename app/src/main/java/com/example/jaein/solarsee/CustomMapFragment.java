@@ -37,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.StringTokenizer;
 
+import static android.graphics.Color.BLACK;
+import static com.example.jaein.solarsee.LoginActivity.font;
 import static java.lang.Integer.parseInt;
 
 
@@ -459,6 +461,8 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
 
             String title = marker.getTitle();
             final TextView titleUi = ((TextView) view.findViewById(R.id.title));
+            titleUi.setTypeface(font);
+            titleUi.setTextSize(30);
             if (title != null) {
                 // Spannable string allows us to edit the formatting of the text.
                 SpannableString titleText = new SpannableString(title);
@@ -478,17 +482,23 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
             String c_stemper = tokens.nextToken(",");
 
             TextView snippetUi = ((TextView) view.findViewById(R.id.sunRiseTime));
+            snippetUi.setTypeface(font);
+            snippetUi.setTextSize(20);
+            snippetUi.setTextColor(BLACK);
             if (snippet != null && snippet.length() > 12) {
                 SpannableString snippetText = new SpannableString(c_sunRise);
-                snippetUi.setText(snippetText);
+                snippetUi.setText(snippetText.subSequence(0,6));
             } else {
                 snippetUi.setText("");
             }
 
             TextView snippetUi2 = ((TextView) view.findViewById(R.id.sunSetTime));
+            snippetUi2.setTypeface(font);
+            snippetUi2.setTextSize(20);
+            snippetUi2.setTextColor(BLACK);
             if (snippet != null && snippet.length() > 12) {
                 SpannableString snippetText = new SpannableString(c_sunSet);
-                snippetUi2.setText(snippetText);
+                snippetUi2.setText(snippetText.subSequence(0,6));
             } else {
                 snippetUi2.setText("");
             }
@@ -520,9 +530,12 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
             }
 
             TextView snippetUi4 = ((TextView) view.findViewById(R.id.riseTemp));
+            snippetUi4.setTypeface(font);
+            snippetUi4.setTextSize(20);
+            snippetUi4.setTextColor(Color.parseColor("#834ca8"));
             if (snippet != null && snippet.length() > 12) {
                 SpannableString snippetText = new SpannableString(c_rtemper);
-                snippetUi4.setText(snippetText);
+                snippetUi4.setText(snippetText.subSequence(3,7)+"℃");
             } else {
                 snippetUi4.setText("");
             }
@@ -553,9 +566,12 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
             }
 
             TextView snippetUi6 = ((TextView) view.findViewById(R.id.setTemp));
+            snippetUi6.setTypeface(font);
+            snippetUi6.setTextSize(20);
+            snippetUi6.setTextColor(Color.parseColor("#834ca8"));
             if (snippet != null && snippet.length() > 12) {
                 SpannableString snippetText = new SpannableString(c_stemper);
-                snippetUi6.setText(snippetText);
+                snippetUi6.setText(snippetText.subSequence(3,7)+"℃");
             } else {
                 snippetUi6.setText("");
             }

@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,7 +27,6 @@ import static com.example.jaein.solarsee.LoginActivity.photoInfo;
 
 
 public class AlbumFragment extends Fragment {
-    GridLayout gl;
     static ArrayList<photo> photo_list;
     static ArrayList<photo> homephoto_list;
     static ArrayList<photo> locaphoto_list;
@@ -80,6 +78,9 @@ public class AlbumFragment extends Fragment {
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+
+        Toast.makeText(getActivity().getApplicationContext(), getActivity()+" 임", Toast.LENGTH_SHORT).show();
+
         super.onActivityCreated(savedInstanceState);
         gridView = (GridView)getActivity().findViewById(R.id.gridview);
         imageView = (ImageView)getActivity().findViewById(R.id.imageView);
@@ -113,10 +114,11 @@ public class AlbumFragment extends Fragment {
                             images.add(storageReference.child(homephoto_list.get(i).getP_date()+".png"));
                         }
                         GridAdapter g_adapter = new GridAdapter(
-                                getActivity().getApplicationContext(),
+                                getActivity(),
                                 R.layout.image_row,
                                 images
                         );
+
                         gridView.setAdapter(g_adapter);
 
                     }
@@ -147,7 +149,7 @@ public class AlbumFragment extends Fragment {
                     images.add(storageReference.child(photo_list.get(i).getP_date()+".png"));
                 }
                 GridAdapter g_adapter = new GridAdapter(
-                        getActivity().getApplicationContext(),
+                        getActivity(),
                         R.layout.image_row,
                         images
                 );
@@ -179,7 +181,7 @@ public class AlbumFragment extends Fragment {
                     images.add(storageReference.child(locaphoto_list.get(i).getP_date()+".png"));
                 }
                 GridAdapter g_adapter = new GridAdapter(
-                        getActivity().getApplicationContext(),
+                        getActivity(),
                         R.layout.image_row,
                         images
                 );

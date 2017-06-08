@@ -33,14 +33,21 @@
             android:layout_height="40dp"
             android:background="@color/colorPrimary"/>
     </android.support.design.widget.AppBarLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="400dp"
         android:orientation="vertical"
         android:layout_margin="16dp">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
             android:layout_marginBottom="16dp"
             android:orientation="horizontal">
             <EditText
@@ -53,9 +60,11 @@
             <Button
                 android:id="@+id/idcheckBtn"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="중복확인"
+                android:textSize="25dp"
+                android:background="@color/colorPurple"
                 android:onClick="joinBtnClick"/>
         </LinearLayout>
 
@@ -63,15 +72,19 @@
             android:paddingLeft="16dp"
             android:id="@+id/joinPW"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:hint="비밀번호"
             android:layout_marginBottom="16dp"
             android:inputType="textPassword" />
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
+            android:gravity="center_vertical">
+
             <EditText
                 android:paddingLeft="16dp"
                 android:id="@+id/joinNickname"
@@ -79,22 +92,28 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="3"
                 android:hint="별명"/>
+
             <Button
                 android:id="@+id/nickcheckBtn"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="중복확인"
+                android:textSize="25dp"
+                android:background="@color/colorPurple"
                 android:onClick="joinBtnClick"/>
         </LinearLayout>
         <Button
             android:id="@+id/completeJoin"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="90dp"
             android:onClick="joinBtnClick"
+            android:textSize="25dp"
+            android:textColor="@android:color/white"
+            android:background="@color/colorPrimaryDark"
             android:text="회원가입"/>
     </LinearLayout>
-
+</LinearLayout>
 </LinearLayout>

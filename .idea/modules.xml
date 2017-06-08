@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SolarSee.iml" filepath="$PROJECT_DIR$/SolarSee.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Solar_See.iml" filepath="$PROJECT_DIR$/Solar_See.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
