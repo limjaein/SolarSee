@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,12 +23,14 @@ import java.util.ArrayList;
 import static com.example.jaein.solarsee.CustomMapFragment.location;
 import static com.example.jaein.solarsee.LoginActivity.loginId;
 import static com.example.jaein.solarsee.LoginActivity.photoInfo;
+import static com.example.jaein.solarsee.R.id.like;
 
 
 public class AlbumFragment extends Fragment {
     static ArrayList<photo> photo_list;
     static ArrayList<photo> homephoto_list;
     static ArrayList<photo> locaphoto_list;
+    static ArrayList<photo> likephoto_list;
     public GridAdapter gridAdapter;
     public GridView gridView;
     ImageView imageView;
@@ -37,8 +38,9 @@ public class AlbumFragment extends Fragment {
     StorageReference storageReference = storage.getReferenceFromUrl("gs://solarsee-859f7.appspot.com/solarsee_images");
 
     static boolean locationTure;
-    //////추가///////
+
     ImageButton home;
+    ImageButton heart;
 
     public AlbumFragment() {
     }
@@ -70,16 +72,20 @@ public class AlbumFragment extends Fragment {
         }
     }
 
+
     @Override
     public void onPause() {
         super.onPause();
         photo_list.clear();
     }
 
+
+
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 
-        Toast.makeText(getActivity().getApplicationContext(), getActivity()+" 임", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity().getApplicationContext(), getActivity()+" 임", Toast.LENGTH_SHORT).show();
 
         super.onActivityCreated(savedInstanceState);
         gridView = (GridView)getActivity().findViewById(R.id.gridview);
@@ -87,13 +93,13 @@ public class AlbumFragment extends Fragment {
 
         ///////추가//////////
         home = (ImageButton)getActivity().findViewById(R.id.home);
+        heart= (ImageButton)getActivity().findViewById(like);
+
         homephoto_list = new ArrayList<>();
         locaphoto_list = new ArrayList<>();
-
-        Toast.makeText(getActivity(), "헤헤", Toast.LENGTH_SHORT).show();
         photo_list = new ArrayList<>();
+        likephoto_list = new ArrayList<>();
 
-        //setImageView();
 
         home.setOnClickListener(new View.OnClickListener() {    //사용자가 올린 사진만 보여준다.
             @Override
@@ -103,6 +109,7 @@ public class AlbumFragment extends Fragment {
                 homephoto_query.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+                        homephoto_list.clear();
                         for (DataSnapshot data : dataSnapshot.getChildren()) {
                             if(data.getValue()!=null){
                                 photo p = data.getValue(photo.class);
@@ -130,6 +137,48 @@ public class AlbumFragment extends Fragment {
                 });
             }
         });
+
+        heart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Query likephoto_query = photoInfo.orderByChild("p_date");
+                likephoto_query.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        likephoto_list.clear();
+                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+                            if(data.getValue()!=null){
+                                photo p = data.getValue(photo.class);
+                                String likePeople = p.getP_like();
+                                String[] like_people = likePeople.split(",");
+                                for (String str : like_people){
+                                    if (str.equals(loginId)){
+                                        likephoto_list.add(p);
+                                    }
+                                }
+                            }
+                        }
+                        ArrayList<StorageReference> images = new ArrayList<>();
+                        for(int i=0 ; i<likephoto_list.size(); i++){
+                            images.add(storageReference.child(likephoto_list.get(i).getP_date()+".png"));
+                        }
+                        GridAdapter g_adapter = new GridAdapter(
+                                getActivity(),
+                                R.layout.image_row,
+                                images
+                        );
+
+                        gridView.setAdapter(g_adapter);
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
     }
 
     public void setImageView(){
@@ -138,6 +187,7 @@ public class AlbumFragment extends Fragment {
         photo_query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                photo_list.clear();
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     if(data.getValue()!=null){
                         photo p = data.getValue(photo.class);
@@ -170,6 +220,7 @@ public class AlbumFragment extends Fragment {
         homephoto_query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                locaphoto_list.clear();
                 for (DataSnapshot data : dataSnapshot.getChildren()) {
                     if(data.getValue()!=null){
                         photo p = data.getValue(photo.class);

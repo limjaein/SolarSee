@@ -51,6 +51,7 @@ import java.util.List;
 
 import static com.example.jaein.solarsee.LoginActivity.font;
 import static com.example.jaein.solarsee.LoginActivity.loginId;
+import static com.example.jaein.solarsee.LoginActivity.loginName;
 import static com.example.jaein.solarsee.LoginActivity.photoInfo;
 
 /**
@@ -133,7 +134,7 @@ public class PostActivity extends AppCompatActivity {
     }
 
     private File savePictureFile() {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd_HHmmss");
         Date now = new Date();
         String imageFileName = formatter.format(now);
             File pictureStorage = new File(
@@ -313,7 +314,7 @@ public class PostActivity extends AppCompatActivity {
                     int spot_pos = filename.indexOf(".");
                     filename = filename.substring(0,spot_pos);
                     // .png 앞부분까지 자름
-                    photo pt = new photo(filename, loginId, content, str_spin, "");
+                    photo pt = new photo(filename, loginId, content, str_spin, "", loginName);
                     photoInfo.child(filename).setValue(pt);
                     Toast.makeText(PostActivity.this, "디비저장 완료", Toast.LENGTH_SHORT).show();
                 }

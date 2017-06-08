@@ -10,6 +10,7 @@ public class photo {
     private String p_content;
     private String p_loca;
     private String p_like;
+    private String p_name;
 
     public photo(){
         p_date = "";
@@ -17,13 +18,15 @@ public class photo {
         p_content = "";
         p_loca = "";
         p_like = "";
+        p_name = "";
     }
-    public photo(String date, String writer, String content, String location, String like){
+    public photo(String date, String writer, String content, String location, String like, String name){
         p_date = date;
         p_writer = writer;
         p_content = content;
         p_loca = location;
         p_like = like;
+        p_name = name;
     }
 
     public String getP_date(){ return p_date;}
@@ -31,11 +34,13 @@ public class photo {
     public String getP_content(){ return p_content;}
     public String getP_loca(){ return p_loca;}
     public String getP_like(){ return p_like;}
+    public String getP_name(){ return p_name;}
 
     public void setP_date(String date){ p_date = date; }
     public void setP_writer(String writer){ p_writer = writer;}
     public void setP_content(String content){ p_content = content;}
     public void setP_loca(String location){ p_loca = location;}
     public void setP_like(String like){ p_like = like; }
+    public void setP_name(String name){ p_name = name;}
 
 }

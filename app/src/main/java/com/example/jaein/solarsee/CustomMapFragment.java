@@ -54,8 +54,6 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
     Date date;
     String curDate, curTime;
     String sunriseInfo, sunsetInfo, rise_cloud, rise_temp, set_cloud, set_temp;
-    int rain;
-   // int Lat, Lng;
     int hour, min;
     SimpleDateFormat CurDateFormat, CurTimeFormat, CurHourFormat, CurMinFormat;
 
@@ -186,7 +184,6 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
         map.setOnMapClickListener(this);
 
         UiSettings uiSettings = map.getUiSettings();
-        //uiSettings.setZoomControlsEnabled(true);
         uiSettings.setAllGesturesEnabled(false);
 
         for(int i=0; i<m_data.size(); i++){
@@ -272,11 +269,9 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
                 else if(eventType == XmlPullParser.START_TAG){
                     String tag_name = xpo.getName();
                     if(tag_name.equals("sunrise") ){
-                        //sunriseInfo = "일출시간"+":";
                         bSet = 1;
                     }
                     else if(tag_name.equals("sunset") ){
-                        //sunsetInfo = "일몰시간"+":";
                         bSet = 2;
                     }
                     else{
@@ -290,7 +285,6 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
                         String min = xpo.getText().substring(2,4);
                         String sec = xpo.getText().substring(4,6);
                         sunriseInfo = hour+"시"+min+"분"+sec+"초";
-                        //Toast.makeText(getActivity(), sunriseInfo, Toast.LENGTH_SHORT).show();
                         bSet = 0;
                     }
                     else if(bSet==2){
@@ -298,7 +292,6 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
                         String min = xpo.getText().substring(2,4);
                         String sec = xpo.getText().substring(4,6);
                         sunsetInfo = hour+"시"+min+"분"+sec+"초";
-                        //Toast.makeText(getActivity(), sunsetInfo, Toast.LENGTH_SHORT).show();
                         bSet = 0;
                     }
                 }
@@ -334,15 +327,12 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
                 else if(eventType == XmlPullParser.START_TAG){
                     String tag_name = xpo.getName();
                     if(tag_name.equals("hour") && dSet==0){
-                        //temperature = "기온"+":";
                         bSet = 1;
                     }
                     else if(tag_name.equals("temp") && dSet ==1 ){
-                        //cloud = "구름"+":";
                         bSet = 2;
                     }
                     else if(tag_name.equals("wfKor") && dSet ==1){
-                        //cloud = "구름"+":";
                         bSet = 3;
                     }
                     else{
@@ -357,7 +347,6 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
                             if(hour-3<=time && time<hour){
                                 dSet = 1;   //내가원하는온도찾음
                                 cSet = 1;
-                                //temperature = "기온";
                             }
                             else{
                                 cSet = 0;
@@ -373,10 +362,7 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
                                 set_temp ="기온:"+xpo.getText();
                             }
 
-                            //cSet=0;
                         }
-                        //cloud += xpo.getText();
-                        //Toast.makeText(getActivity(), sunsetInfo, Toast.LENGTH_SHORT).show();
                         bSet = 0;
                     }
                     else if(bSet == 3){
@@ -423,8 +409,6 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
 
     class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
-        // These are both viewgroups containing an ImageView with id "badge" and two TextViews with id
-        // "title" and "snippet".
         private final View mWindow;
 
         private final View mContents;
@@ -436,20 +420,12 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
 
         @Override
         public View getInfoWindow(Marker marker) {
-//            if (mOptions.getCheckedRadioButtonId() != R.id.custom_info_window) {
-//                // This means that getInfoContents will be called.
-//                return null;
-//            }
             render(marker, mWindow);
             return mWindow;
         }
 
         @Override
         public View getInfoContents(Marker marker) {
-//            if (mOptions.getCheckedRadioButtonId() != R.id.custom_info_contents) {
-//                // This means that the default info contents will be used.
-//                return null;
-//            }
             render(marker, mContents);
             return mContents;
         }
@@ -464,7 +440,6 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
             titleUi.setTypeface(font);
             titleUi.setTextSize(30);
             if (title != null) {
-                // Spannable string allows us to edit the formatting of the text.
                 SpannableString titleText = new SpannableString(title);
                 titleText.setSpan(new ForegroundColorSpan(Color.RED), 0, titleText.length(), 0);
                 titleUi.setText(titleText);
@@ -541,7 +516,7 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
             }
 
             ImageView snippetUi5 = ((ImageView) view.findViewById(R.id.setCloud));
-            switch (c_rcloud){
+            switch (c_scloud){
                 case "맑음":
                     snippetUi5.setImageResource(R.drawable.sun);
                     break;
@@ -576,86 +551,7 @@ public class CustomMapFragment extends Fragment implements OnMapReadyCallback,
                 snippetUi6.setText("");
             }
 
-//            li.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    AlbumFragment albumFragment = (AlbumFragment)getFragmentManager().findFragmentById(R.id.albumFrag);
-//                    String title = marker.getTitle();
-//                    location = title;
-//                    Toast.makeText(getActivity(), location, Toast.LENGTH_SHORT).show();
-//                    albumFragment.locaImageList();
-//                }
-//            });
 
         }
     }
-
-//    class lamc_parameter{
-//        double  Re;          /* 사용할 지구반경 [ km ]      */
-//        double  grid;        /* 격자간격        [ km ]      */
-//        double  slat1;       /* 표준위도        [degree]    */
-//        double  slat2;       /* 표준위도        [degree]    */
-//        double  olon;        /* 기준점의 경도   [degree]    */
-//        double  olat;        /* 기준점의 위도   [degree]    */
-//        double  xo;          /* 기준점의 X좌표  [격자거리]  */
-//        double  yo;          /* 기준점의 Y좌표  [격자거리]  */
-//        int    first;       /* 시작여부 (0 = 시작)         */
-//    };
-
-//    public void convert(double lat, double lon, PlaceInfo data){
-//        double  PI=0, DEGRAD=0, RADDEGS=0;
-//        double  re=0, olon=0, olat=0, sn=0, sf=0, ro=0;
-//        double  slat1, slat2, alon, alat, xn, yn, ra, theta;
-//        double x=0;
-//        double y=0;
-//        int Lat=0 , Lng=0;
-//
-//        lamc_parameter map = new lamc_parameter();
-//        map.Re = 6371.00877;     // 지도반경
-//        map.grid = 5.0;            // 격자간격 (km)
-//        map.slat1 = 30.0;           // 표준위도 1
-//        map.slat2 = 60.0;           // 표준위도 2
-//        map.olon = 126.0;          // 기준점 경도
-//        map.olat = 38.0;           // 기준점 위도
-//        map.xo = 210 / map.grid;   // 기준점 X좌표
-//        map.yo = 675 / map.grid;   // 기준점 Y좌표
-//        map.first = 0;
-//
-//        if (map.first == 0) {
-//            PI = Math.asin(1.0)*2.0;
-//            DEGRAD = PI / 180.0;
-//            RADDEGS = 180.0 / PI;
-//
-//            re = map.Re / map.grid;
-//            slat1 = map.slat1 * DEGRAD;
-//            slat2 = map.slat2 * DEGRAD;
-//            olon = map.olon * DEGRAD;
-//            olat = map.olat * DEGRAD;
-//
-//            sn = Math.tan(PI*0.25 + slat2*0.5) / Math.tan(PI*0.25 + slat1*0.5);
-//            sn = Math.log(Math.cos(slat1) / Math.cos(slat2)) / Math.log(sn);
-//            sf = Math.tan(PI*0.25 + slat1*0.5);
-//            sf = Math.pow(sf, sn)*Math.cos(slat1) / sn;
-//            ro = Math.tan(PI*0.25 + olat*0.5);
-//            ro = re*sf / Math.pow(ro, sn);
-//            map.first = 1;
-//        }
-//
-//
-//        ra = Math.tan(PI*0.25 + (lat)*DEGRAD*0.5);
-//        ra = re*sf / Math.pow(ra, sn);
-//        theta = (lon)*DEGRAD - olon;
-//        if (theta >  PI) theta -= 2.0*PI;
-//        if (theta < -PI) theta += 2.0*PI;
-//        theta *= sn;
-//        x = (float)(ra*Math.sin(theta)) + map.xo;
-//        y = (float)(ro - ra*Math.cos(theta)) + map.yo;
-//
-//        Lat = (int)(x+1.5);
-//        Lng = (int)(y+1.5);
-//
-//        data.setLatlng(Lat, Lng);
-//
-//
-//    }
 }
