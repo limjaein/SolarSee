@@ -266,7 +266,7 @@ public class PostActivity extends AppCompatActivity {
             progressDialog.show();
 
             //Unique한 파일명을 만들자.
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMHH_mmss");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd_HHmmss");
             Date now = new Date();
             filename = formatter.format(now) + ".png";
             //storage 주소와 폴더 파일명을 지정해 준다.

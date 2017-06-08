@@ -120,14 +120,18 @@ public class AlbumFragment extends Fragment {
                         for(int i=0 ; i<homephoto_list.size(); i++){
                             images.add(storageReference.child(homephoto_list.get(i).getP_date()+".png"));
                         }
-                        GridAdapter g_adapter = new GridAdapter(
-                                getActivity(),
-                                R.layout.image_row,
-                                images
-                        );
 
-                        gridView.setAdapter(g_adapter);
+                        if(getActivity()!=null){
 
+                            GridAdapter g_adapter = new GridAdapter(
+                                    getActivity(),
+                                    R.layout.image_row,
+                                    images
+                            );
+
+                            gridView.setAdapter(g_adapter);
+
+                        }
                     }
 
                     @Override
@@ -162,13 +166,17 @@ public class AlbumFragment extends Fragment {
                         for(int i=0 ; i<likephoto_list.size(); i++){
                             images.add(storageReference.child(likephoto_list.get(i).getP_date()+".png"));
                         }
-                        GridAdapter g_adapter = new GridAdapter(
-                                getActivity(),
-                                R.layout.image_row,
-                                images
-                        );
 
-                        gridView.setAdapter(g_adapter);
+                        if(getActivity()!=null){
+                            GridAdapter g_adapter = new GridAdapter(
+                                    getActivity(),
+                                    R.layout.image_row,
+                                    images
+                            );
+
+                            gridView.setAdapter(g_adapter);
+
+                        }
 
                     }
 
@@ -198,12 +206,15 @@ public class AlbumFragment extends Fragment {
                 for(int i=0 ; i<photo_list.size(); i++){
                     images.add(storageReference.child(photo_list.get(i).getP_date()+".png"));
                 }
-                GridAdapter g_adapter = new GridAdapter(
-                        getActivity(),
-                        R.layout.image_row,
-                        images
-                );
-                gridView.setAdapter(g_adapter);
+                if(getActivity()!=null){
+                    GridAdapter g_adapter = new GridAdapter(
+                            getActivity(),
+                            R.layout.image_row,
+                            images
+                    );
+                    gridView.setAdapter(g_adapter);
+
+                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -231,12 +242,15 @@ public class AlbumFragment extends Fragment {
                 for(int i=0 ; i<locaphoto_list.size(); i++){
                     images.add(storageReference.child(locaphoto_list.get(i).getP_date()+".png"));
                 }
-                GridAdapter g_adapter = new GridAdapter(
-                        getActivity(),
-                        R.layout.image_row,
-                        images
-                );
-                gridView.setAdapter(g_adapter);
+
+                if (getActivity() != null) {
+                    GridAdapter g_adapter = new GridAdapter(
+                            getActivity(),
+                            R.layout.image_row,
+                            images
+                    );
+                    gridView.setAdapter(g_adapter);
+                }
 
             }
 

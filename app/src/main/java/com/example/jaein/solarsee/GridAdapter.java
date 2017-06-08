@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.design.widget.Snackbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -196,6 +197,41 @@ public class GridAdapter extends BaseAdapter {
                 });
                 dialog.show();
 
+            }
+        });
+
+        iv.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(final View view) {
+                String imgName =  img.get(position).toString().substring(48);
+                imgName = new StringTokenizer(imgName).nextToken(".");
+                final String imgName2 = imgName;
+                Snackbar.make(view, "삭제하시겠습니까?", Snackbar.LENGTH_LONG)
+                        .setAction("OK", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Query photo_query = photoInfo.orderByChild("p_date").equalTo(imgName2);
+
+                                photo_query.addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot data : dataSnapshot.getChildren()) {
+                                            if(data.getValue()!=null){
+                                                final photo p = data.getValue(photo.class);
+                                                photoInfo.child(p.getP_date()).removeValue();
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onCancelled(DatabaseError databaseError) {
+
+                                    }
+                                });
+                            }
+                        });
+
+                return false;
             }
         });
         return convertView;
